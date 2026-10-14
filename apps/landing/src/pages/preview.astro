@@ -1,0 +1,22 @@
+---
+// src/pages/preview.astro
+import "../styles/_magazine.scss";
+import frontCoverSVG from "../assets/front cover.svg?raw";
+---
+
+<html>
+  <head>
+    <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+  </head>
+  <body>
+    <div id="magazine-scaler">
+      <section id="cover-page" class="magazine-page">
+        <Fragment set:html={frontCoverSVG} />
+      </section>
+    </div>
+  </body>
+</html>
+
+<script>
+  import "../scripts/preview.ts";
+</script>
