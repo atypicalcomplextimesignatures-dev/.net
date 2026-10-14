@@ -2,8 +2,8 @@
   "name": "atypicalcomplextimesignatures-net",
   "private": true,
   "scripts": {
-    "dev:landing": "pnpm --filter apps/landing dev",
-    "dev:games": "pnpm --filter apps/games dev",
+    "dev:landing": "pnpm --filter ./apps/landing dev",
+    "dev:games": "pnpm --filter ./apps/games dev",
     "build": "pnpm -r build"
   }
 }
