@@ -8,7 +8,7 @@
     "dev:artwork": "pnpm --filter ./apps/artwork dev",
     "dev:literature": "pnpm --filter ./apps/literature dev",
     "dev:projects": "pnpm --filter ./apps/projects dev",
-    "dev:magazine": "pnpm --filter ./apps/magazine dev",
+    "dev:argama": "pnpm --filter ./apps/argama dev",
     "build": "pnpm -r build"
   }
 }

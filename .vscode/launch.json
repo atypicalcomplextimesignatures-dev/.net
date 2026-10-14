@@ -32,8 +32,8 @@
       "type": "node-terminal"
     },
     {
-      "command": "pnpm dev:magazine",
-      "name": "Dev: Magazine",
+      "command": "pnpm dev:argama",
+      "name": "Dev: Argama",
       "request": "launch",
       "type": "node-terminal"
     }

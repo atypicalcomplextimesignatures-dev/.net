@@ -5,8 +5,8 @@ interface Props {
 }
 
 const {
-  title = "Artwork — atypicalcomplextimesignatures",
-  description = "Visual archive, original digital illustration, and character design.",
+  title = "artwork.svenja.dev",
+  description = "Artwork by Svenja."
 } = Astro.props;
 
 import Navbar from "@repo/ui/Navbar.astro";
@@ -22,50 +22,28 @@ import Navbar from "@repo/ui/Navbar.astro";
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:wght@400;600;700&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:wght@400;600;700&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
     <Navbar currentSection="artwork" currentPath={Astro.url.pathname} />
-    <main class="page-container">
-      <slot />
-    </main>
+    <slot />
   </body>
 </html>
 
 <style is:global lang="scss">
-  :root {
-    --bg-page: #141419;
-    --bg-card: rgba(26, 26, 34, 0.7);
-    --border-card: rgba(255, 255, 255, 0.08);
-    --text-primary: #f0f0f4;
-    --text-muted: #9e9ea8;
-    --accent-gold: #ffd47d;
-    --accent-coral: #ff7a59;
-  }
-
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
 
+  html,
   body {
-    background-color: var(--bg-page);
-    color: var(--text-primary);
-    font-family: "Inter", -apple-system, sans-serif;
+    background-color: #16161d;
+    color: #e2e2e2;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-  }
-
-  .page-container {
-    flex: 1;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 4rem;
+    font-family: "Cascadia Mono", monospace, sans-serif;
   }
 </style>
