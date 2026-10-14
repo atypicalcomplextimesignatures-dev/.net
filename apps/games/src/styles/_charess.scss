@@ -1,0 +1,145 @@
+.charess-container {
+  max-width: 760px;
+  margin: 2.5rem auto 5rem;
+  padding: 0 1.5rem;
+}
+
+.charess-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(255, 212, 125, 0.15);
+    color: #ffd47d;
+    border: 1px solid rgba(255, 212, 125, 0.3);
+  }
+}
+
+.charess-card {
+  background: rgba(22, 22, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem;
+    color: #f0f0f4;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #9e9ea8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  select, input[type="text"], input[type="number"] {
+    background: #141419;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: #f0f0f4;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:focus {
+      border-color: #ffd47d;
+      box-shadow: 0 0 0 2px rgba(255, 212, 125, 0.2);
+    }
+  }
+}
+
+.hint-breakdown-box {
+  grid-column: 1 / -1;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-top: 0.5rem;
+
+  .hint-title {
+    font-size: 0.8rem;
+    color: #9e9ea8;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  #hintBreakdown {
+    white-space: pre-line;
+    font-family: "Cascadia Mono", monospace;
+    font-size: 0.9rem;
+    color: #ffd47d;
+    line-height: 1.6;
+  }
+}
+
+#gameBox {
+  margin-top: 1.5rem;
+
+  #hints {
+    margin-bottom: 1.5rem;
+    min-height: 100px;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+  }
+
+  #guessBox {
+    width: 100%;
+    background: #141419;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.85rem 1.2rem;
+    color: #fff;
+    font-size: 1.1rem;
+    outline: none;
+
+    &:focus {
+      border-color: #ffd47d;
+    }
+  }
+}

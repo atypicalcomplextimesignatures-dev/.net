@@ -1,0 +1,64 @@
+---
+// src/pages/charess.astro
+import Layout from "../layouts/Layout.astro";
+import "../styles/_charess.scss";
+---
+
+<Layout title="Charess — Games" description="Character guessing puzzle game.">
+  <div class="charess-container">
+    <div class="charess-header">
+      <div>
+        <h1>Charess</h1>
+        <p style="color: #9e9ea8; margin-top: 0.25rem;">Character guessing game</p>
+      </div>
+      <span class="badge">In Development</span>
+    </div>
+
+    <div id="gameSettings" class="charess-card">
+      <h2>Game Configuration</h2>
+      <div class="form-grid">
+        <div class="form-group" id="characterSet">
+          <label for="franchise">Franchise</label>
+          <select name="franchise" id="franchise">
+            <option value="touhou">Touhou Project</option>
+            <option value="hololive">Hololive</option>
+            <option value="100OrangeJuice">100% Orange Juice</option>
+            <option value="vocalSynths">Vocal Synths</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="maxTime">Max Time</label>
+          <select name="maxTime" id="maxTime">
+            <option value="30">30s</option>
+            <option value="60" selected>60s</option>
+            <option value="90">90s</option>
+            <option value="unlimited">&infin; Unlimited</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="maxHints">Max Hints</label>
+          <input type="number" id="maxHints" min="1" value="5" max="8" />
+        </div>
+
+        <div class="hint-breakdown-box">
+          <div class="hint-title">Hint Breakdown</div>
+          <div id="hintBreakdown"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="gameBox" class="charess-card" hidden>
+      <h2>Guess the character!</h2>
+      <div id="hints"></div>
+      <div>
+        <input type="text" id="guessBox" placeholder="Type character name to guess..." />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import "../scripts/charess.ts";
+  </script>
+</Layout>

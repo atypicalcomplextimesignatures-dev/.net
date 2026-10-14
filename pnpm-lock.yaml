@@ -8,6 +8,19 @@ importers:
 
   .: {}
 
+  apps/artwork:
+    dependencies:
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      astro:
+        specifier: ^5.16.11
+        version: 5.18.2(rollup@4.64.5)(sass@1.105.1)(typescript@5.9.3)
+    devDependencies:
+      sass:
+        specifier: ^1.97.2
+        version: 1.105.1
+
   apps/games:
     dependencies:
       '@repo/ui':
@@ -16,8 +29,38 @@ importers:
       astro:
         specifier: ^5.16.11
         version: 5.18.2(rollup@4.64.5)(sass@1.105.1)(typescript@5.9.3)
+    devDependencies:
+      sass:
+        specifier: ^1.97.2
+        version: 1.105.1
 
-  apps/landing:
+  apps/home:
+    dependencies:
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      astro:
+        specifier: ^5.16.11
+        version: 5.18.2(rollup@4.64.5)(sass@1.105.1)(typescript@5.9.3)
+    devDependencies:
+      sass:
+        specifier: ^1.97.2
+        version: 1.105.1
+
+  apps/literature:
+    dependencies:
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      astro:
+        specifier: ^5.16.11
+        version: 5.18.2(rollup@4.64.5)(sass@1.105.1)(typescript@5.9.3)
+    devDependencies:
+      sass:
+        specifier: ^1.97.2
+        version: 1.105.1
+
+  apps/magazine:
     dependencies:
       '@repo/ui':
         specifier: workspace:*
@@ -33,11 +76,28 @@ importers:
         specifier: ^1.97.2
         version: 1.105.1
 
+  apps/projects:
+    dependencies:
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      astro:
+        specifier: ^5.16.11
+        version: 5.18.2(rollup@4.64.5)(sass@1.105.1)(typescript@5.9.3)
+    devDependencies:
+      sass:
+        specifier: ^1.97.2
+        version: 1.105.1
+
   packages/ui:
     dependencies:
       astro:
         specifier: ^5.0.0
         version: 5.18.2(rollup@4.64.5)(sass@1.105.1)(typescript@5.9.3)
+    devDependencies:
+      sass:
+        specifier: ^1.97.2
+        version: 1.105.1
 
 packages:
 

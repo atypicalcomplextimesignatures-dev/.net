@@ -2,14 +2,38 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "pnpm dev:landing",
-      "name": "Dev: Landing",
+      "command": "pnpm dev:home",
+      "name": "Dev: Home",
       "request": "launch",
       "type": "node-terminal"
     },
     {
       "command": "pnpm dev:games",
       "name": "Dev: Games",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "pnpm dev:artwork",
+      "name": "Dev: Artwork",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "pnpm dev:literature",
+      "name": "Dev: Literature",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "pnpm dev:projects",
+      "name": "Dev: Projects",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "pnpm dev:magazine",
+      "name": "Dev: Magazine",
       "request": "launch",
       "type": "node-terminal"
     }

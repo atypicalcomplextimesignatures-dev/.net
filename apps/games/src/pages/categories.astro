@@ -1,0 +1,372 @@
+ø---
+import Layout from '../layouts/Layout.astro';
+import "../styles/style.scss";
+---
+
+<Layout title="Categories — Games" description="Custom word puzzle games.">
+  <script is:inline src="/qrcode.min.js"></script>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="/categories" id="nav-logo" class="logo">Categories</a>
+        <span id="current-puzzle-id" class="puzzle-id-tag hidden"></span>
+      </div>
+
+      <!-- Play By ID Bar (sits in between on desktop, second row on mobile) -->
+      <div id="quick-play-bar" class="quick-play-bar">
+        <form id="quick-play-form" class="quick-play-form">
+          <span class="url-prefix">svenja.dev/c/</span>
+          <input id="quick-play-input" type="text" placeholder="game-id" required autocomplete="off" />
+          <button type="submit" class="btn-sm">Play</button>
+        </form>
+      </div>
+
+      <div class="header-right">
+        <button id="btn-nav-create" class="nav-link highlight">+ Make a Puzzle</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Bottom-Right Controls (? and settings) -->
+  <aside class="bottom-right-controls">
+    <button id="btn-nav-help" class="nav-icon-btn" title="How to play">?</button>
+    <button id="btn-nav-settings" class="nav-icon-btn" title="Google Sheets backend">⚙</button>
+  </aside>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Main Container -->
+  <main class="main">
+    <!-- ================= GAME PLAY VIEW ================= -->
+    <section id="view-play" class="view">
+      <div class="game-top-info">
+        <div class="game-instruction">Create four groups of four!</div>
+      </div>
+
+      <!-- Solved categories stack -->
+      <div id="solved-categories" class="solved-categories"></div>
+
+      <!-- 4x4 Word Tiles -->
+      <div id="tile-grid" class="tile-grid"></div>
+
+      <!-- Mistakes Tracker -->
+      <div class="mistakes-row">
+        <span class="mistakes-text">Mistakes remaining:</span>
+        <div id="mistakes-dots" class="mistakes-dots">
+          <span class="dot remaining"></span>
+          <span class="dot remaining"></span>
+          <span class="dot remaining"></span>
+          <span class="dot remaining"></span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button id="btn-shuffle" class="btn-action">Shuffle</button>
+        <button id="btn-deselect" class="btn-action" disabled>Deselect all</button>
+        <button id="btn-submit" class="btn-action btn-submit" disabled>Submit</button>
+      </div>
+
+      <!-- Leaderboard & QR buttons -->
+      <div class="board-footer">
+        <button id="btn-view-leaderboard" class="link-btn">View Friend Scores</button>
+        <span class="footer-sep">·</span>
+        <button id="btn-board-qr" class="link-btn">QR Code</button>
+      </div>
+    </section>
+
+    <!-- ================= CREATE VIEW ================= -->
+    <section id="view-create" class="view hidden">
+      <div class="create-header">
+        <h2>Make Your Own Puzzle</h2>
+        <button type="button" id="btn-fill-example" class="link-btn">Fill sample data</button>
+      </div>
+
+      <div id="create-error" class="form-error hidden"></div>
+
+      <form id="create-form" class="create-form">
+        <div class="field-row">
+          <label for="create-slug">Game URL</label>
+          <div class="slug-row">
+            <span class="url-prefix">svenja.dev/c/</span>
+            <input id="create-slug" type="text" placeholder="mygame" required autocomplete="off" />
+          </div>
+          <small>This ID is what you send to friends to play.</small>
+        </div>
+
+        <div class="field-row">
+          <label for="create-title">Title (Optional)</label>
+          <input id="create-title" type="text" placeholder="e.g. Trivia Night" maxlength="60" />
+        </div>
+
+        <!-- 4 Category Groups -->
+        <div class="category-forms">
+          <!-- Yellow -->
+          <div class="category-block yellow">
+            <div class="cat-label yellow">Yellow — Straightforward</div>
+            <input type="text" id="name-yellow" placeholder="Category Name (e.g. WET WEATHER)" required />
+            <div class="words-grid">
+              <input type="text" class="word-input" data-color="yellow" placeholder="Word 1" required />
+              <input type="text" class="word-input" data-color="yellow" placeholder="Word 2" required />
+              <input type="text" class="word-input" data-color="yellow" placeholder="Word 3" required />
+              <input type="text" class="word-input" data-color="yellow" placeholder="Word 4" required />
+            </div>
+          </div>
+
+          <!-- Green -->
+          <div class="category-block green">
+            <div class="cat-label green">Green — Intermediate</div>
+            <input type="text" id="name-green" placeholder="Category Name (e.g. TYPES OF COFFEE)" required />
+            <div class="words-grid">
+              <input type="text" class="word-input" data-color="green" placeholder="Word 1" required />
+              <input type="text" class="word-input" data-color="green" placeholder="Word 2" required />
+              <input type="text" class="word-input" data-color="green" placeholder="Word 3" required />
+              <input type="text" class="word-input" data-color="green" placeholder="Word 4" required />
+            </div>
+          </div>
+
+          <!-- Blue -->
+          <div class="category-block blue">
+            <div class="cat-label blue">Blue — Hard</div>
+            <input type="text" id="name-blue" placeholder="Category Name (e.g. WORDS BEFORE 'BOARD')" required />
+            <div class="words-grid">
+              <input type="text" class="word-input" data-color="blue" placeholder="Word 1" required />
+              <input type="text" class="word-input" data-color="blue" placeholder="Word 2" required />
+              <input type="text" class="word-input" data-color="blue" placeholder="Word 3" required />
+              <input type="text" class="word-input" data-color="blue" placeholder="Word 4" required />
+            </div>
+          </div>
+
+          <!-- Purple -->
+          <div class="category-block purple">
+            <div class="cat-label purple">Purple — Tricky</div>
+            <input type="text" id="name-purple" placeholder="Category Name (e.g. PALINDROMES)" required />
+            <div class="words-grid">
+              <input type="text" class="word-input" data-color="purple" placeholder="Word 1" required />
+              <input type="text" class="word-input" data-color="purple" placeholder="Word 2" required />
+              <input type="text" class="word-input" data-color="purple" placeholder="Word 3" required />
+              <input type="text" class="word-input" data-color="purple" placeholder="Word 4" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="btn-cancel-create" class="btn-action">Cancel</button>
+          <button type="submit" id="btn-publish-submit" class="btn-action btn-submit">Save &amp; Publish</button>
+        </div>
+      </form>
+
+      <!-- Published Result Box -->
+      <div id="publish-success" class="publish-success hidden">
+        <h3>Puzzle Published!</h3>
+        <p>Share this URL with your friends:</p>
+        <div class="share-box">
+          <input id="share-link-input" type="text" readonly />
+          <button id="btn-copy-share-link" class="btn-sm">Copy</button>
+        </div>
+        <div id="publish-qr-wrap" class="qr-wrap">
+          <div id="publish-qrcode" class="qr-code"></div>
+          <span class="qr-hint">Scan to play on phone</span>
+        </div>
+        <div class="published-buttons">
+          <button id="btn-play-published" class="btn-action btn-submit">Play it Now</button>
+          <button id="btn-make-another" class="btn-action">Make Another</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- Game Over / Results Modal -->
+  <div id="modal-results" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="results-headline">Game Over</h3>
+        <button class="close-btn" data-close="modal-results">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p id="results-sub" class="results-sub"></p>
+        <pre id="results-grid" class="emoji-grid"></pre>
+
+        <!-- Submit score -->
+        <div class="score-card">
+          <div id="score-saved-msg" class="score-saved-msg hidden">
+            ✓ Score saved to leaderboard!
+          </div>
+          <form id="score-form" class="score-form">
+            <label for="player-name">Your Name:</label>
+            <div class="inline-input-row">
+              <input id="player-name" type="text" placeholder="Name" required maxlength="30" />
+              <button type="submit" class="btn-sm">Save</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="results-actions">
+          <button id="btn-share-results" class="btn-action btn-submit full-width">Share Results</button>
+          <button id="btn-toggle-results-qr" class="btn-action full-width">Show QR Code</button>
+          <div id="results-qr-wrap" class="qr-wrap hidden">
+            <div id="results-qrcode" class="qr-code"></div>
+            <span class="qr-hint">Scan to play this puzzle</span>
+          </div>
+          <button id="btn-open-leaderboard" class="btn-action full-width">View Leaderboard</button>
+          <button id="btn-play-again" class="btn-action full-width">Play Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaderboard Modal -->
+  <div id="modal-leaderboard" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="leaderboard-title">Scores</h3>
+        <button class="close-btn" data-close="modal-leaderboard">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="leaderboard-empty" class="empty-text hidden">No scores recorded yet.</div>
+        <div id="leaderboard-list" class="leaderboard-list"></div>
+        <button class="btn-action full-width mt-10" data-close="modal-leaderboard">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to Play Modal -->
+  <div id="modal-help" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>How to Play</h3>
+        <button class="close-btn" data-close="modal-help">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Find groups of four items that share something in common.</p>
+        <ul>
+          <li>Select four items and tap 'Submit' to check if your guess is correct.</li>
+          <li>Find the groups without making 4 mistakes!</li>
+        </ul>
+        <div class="help-legend">
+          <div class="legend-item yellow">🟨 Yellow: Straightforward</div>
+          <div class="legend-item green">🟩 Green: Intermediate</div>
+          <div class="legend-item blue">🟦 Blue: Hard</div>
+          <div class="legend-item purple">🟪 Purple: Tricky</div>
+        </div>
+        <p class="mt-10"><small>Click <strong>+ Make a Puzzle</strong> at the top to create your own boards and share them with friends.</small></p>
+        <button class="btn-action full-width mt-10" data-close="modal-help">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings (Google Sheets backend) Modal -->
+  <div id="modal-settings" class="modal-overlay hidden">
+    <div class="modal settings-modal">
+      <div class="modal-header">
+        <h3>Google Sheets Backend Setup</h3>
+        <button class="close-btn" data-close="modal-settings">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="settings-intro">
+          Connect a free Google Sheet via Google Apps Script to save custom puzzles and sync friend scores across all devices.
+        </p>
+
+        <div class="field-row mt-10">
+          <label for="gas-url-input">Apps Script Web App URL</label>
+          <input id="gas-url-input" type="url" placeholder="https://script.google.com/macros/s/.../exec" />
+          <small>Leave empty to store games locally in browser.</small>
+        </div>
+
+        <div class="inline-input-row mt-10">
+          <button type="button" id="btn-test-gas" class="btn-action">Test Connection</button>
+          <span id="gas-test-result" class="test-result"></span>
+        </div>
+
+        <div class="mt-10">
+          <button id="btn-save-settings" class="btn-action btn-submit full-width">Save Settings</button>
+        </div>
+
+        <!-- Full Step-by-Step Instructions -->
+        <div class="instructions-section">
+          <h4>Step-by-Step Setup Guide</h4>
+          
+          <div class="step-item">
+            <span class="step-num">1</span>
+            <div>
+              <strong>Create a Google Sheet</strong>
+              <p>Go to <a href="https://sheets.new" target="_blank" rel="noopener">sheets.new</a> to create a new spreadsheet (e.g. named <code>Categories DB</code>).</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <span class="step-num">2</span>
+            <div>
+              <strong>Open Apps Script Editor</strong>
+              <p>In your Google Sheet menu, click <strong>Extensions &gt; Apps Script</strong>. <small class="text-muted">(Tip: If you see "Datei kann nicht geöffnet werden", open an Incognito window with only one Google account logged in.)</small></p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <span class="step-num">3</span>
+            <div>
+              <strong>Paste Backend Code</strong>
+              <p>Delete any default boilerplate in <code>Code.gs</code> and paste the backend code (includes <code>/** @OnlyCurrentDoc */</code> so it only ever accesses this single spreadsheet):</p>
+              <button type="button" id="btn-copy-gas-code" class="btn-sm mt-5">Copy Code.gs Script to Clipboard</button>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <span class="step-num">4</span>
+            <div>
+              <strong>Initialize Columns</strong>
+              <p>In the Apps Script toolbar function dropdown, select <strong><code>initSpreadsheet</code></strong> and click <strong>▷ Run</strong>. Grant permissions when prompted (<em>Advanced &gt; Go to Categories Game API (unsafe) &gt; Allow</em>). You're only authorizing your own code to edit this one sheet. This creates the <code>Games</code> and <code>Results</code> sheets automatically!</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <span class="step-num">5</span>
+            <div>
+              <strong>Deploy as Web App</strong>
+              <p>Click the blue <strong>Deploy &gt; New deployment</strong> button:</p>
+              <ul>
+                <li>Select type: <strong>Web app</strong> (gear icon)</li>
+                <li>Execute as: <strong>Me</strong></li>
+                <li>Who has access: <strong>Anyone</strong> <small>(essential so friends can load boards and submit scores without signing in)</small></li>
+              </ul>
+              <p>Click <strong>Deploy</strong> and copy the <strong>Web app URL</strong> (ends in <code>/exec</code>).</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <span class="step-num">6</span>
+            <div>
+              <strong>Paste URL &amp; Save</strong>
+              <p>Paste your Web app URL into the input field above, click <strong>Test Connection</strong>, then click <strong>Save Settings</strong>!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share / QR Modal -->
+  <div id="modal-qr" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="qr-modal-title">Share Puzzle</h3>
+        <button class="close-btn" data-close="modal-qr">&times;</button>
+      </div>
+      <div class="modal-body qr-modal-body">
+        <div id="modal-qrcode" class="qr-code"></div>
+        <span class="qr-hint">Scan with phone camera</span>
+        <div class="share-box mt-10">
+          <input id="modal-qr-link" type="text" readonly />
+          <button id="btn-copy-modal-qr" class="btn-sm">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/app.js"></script>
+</Layout>

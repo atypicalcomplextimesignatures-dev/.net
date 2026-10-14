@@ -1,0 +1,46 @@
+// Shared UI Styles (SCSS)
+$ui-primary: #ff5a24;
+$ui-secondary: #26c9ff;
+$ui-radius: 6px;
+
+:root {
+  --ui-primary: #{$ui-primary};
+  --ui-secondary: #{$ui-secondary};
+  --ui-radius: #{$ui-radius};
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--ui-radius);
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &-primary {
+    background-color: var(--ui-primary);
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+
+  &-secondary {
+    background-color: var(--ui-secondary);
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+}

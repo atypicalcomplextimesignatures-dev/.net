@@ -11,5 +11,8 @@
   "dependencies": {
     "@repo/ui": "workspace:*",
     "astro": "^5.16.11"
+  },
+  "devDependencies": {
+    "sass": "^1.97.2"
   }
 }

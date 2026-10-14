@@ -1,0 +1,206 @@
+---
+interface SubOption {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  currentSection?: "home" | "artwork" | "literature" | "games" | "projects" | string;
+  currentPath?: string;
+  brand?: string;
+  homeUrl?: string;
+  artworkUrl?: string;
+  literatureUrl?: string;
+  gamesUrl?: string;
+  projectsUrl?: string;
+  subOptions?: SubOption[];
+}
+
+const {
+  currentSection = "home",
+  currentPath = Astro.url.pathname,
+  brand = "atypicalcomplextimesignatures",
+  homeUrl = "https://atypicalcomplextimesignatures.net",
+  artworkUrl = "https://artwork.svenja.dev",
+  literatureUrl = "https://literature.svenja.dev",
+  gamesUrl = "https://games.svenja.dev",
+  projectsUrl = "https://projects.svenja.dev",
+  subOptions,
+} = Astro.props;
+
+// Determine active section if default "home" was passed but currentPath implies another section
+let activeSection = currentSection;
+if (activeSection === "home") {
+  if (currentPath.startsWith("/artwork")) activeSection = "artwork";
+  else if (currentPath.startsWith("/literature")) activeSection = "literature";
+  else if (currentPath.startsWith("/games")) activeSection = "games";
+  else if (currentPath.startsWith("/projects")) activeSection = "projects";
+}
+
+const isHome = activeSection === "home";
+
+// Sub-options per section
+const defaultSubOptions: Record<string, SubOption[]> = {
+  games: [
+    { label: "categories", href: `${gamesUrl}/categories` },
+    { label: "charess", href: `${gamesUrl}/charess` },
+  ],
+  artwork: [],
+  literature: [],
+  projects: [],
+};
+
+const currentSubOptions = subOptions || defaultSubOptions[activeSection] || [];
+
+const mainSections = [
+  { key: "artwork", label: "artwork", href: artworkUrl },
+  { key: "literature", label: "literature", href: literatureUrl },
+  { key: "games", label: "games", href: gamesUrl },
+  { key: "projects", label: "projects", href: projectsUrl },
+];
+---
+
+<nav class="global-navbar">
+  <div class="nav-cluster">
+    {isHome ? (
+      <div class="nav-segment">
+        <a href={homeUrl} class="nav-item nav-root active">home</a>
+        <span class="nav-divider">|</span>
+        <ul class="nav-links">
+          {mainSections.map((sec) => (
+            <li>
+              <a href={sec.href} class="nav-item">
+                {sec.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <div class="nav-segment">
+        <a href={homeUrl} class="nav-item nav-back active" title="Back to home">
+          <span class="back-arrow">&lt;</span>
+          <span class="section-label">{activeSection}</span>
+        </a>
+        {currentSubOptions.length > 0 && (
+          <>
+            <span class="nav-divider">|</span>
+            <ul class="nav-links sub-links">
+              {currentSubOptions.map((sub) => {
+                const isSubActive =
+                  currentPath === sub.label ||
+                  currentPath === `/${sub.label}` ||
+                  currentPath.startsWith(`/${sub.label}/`) ||
+                  currentPath.endsWith(`/${sub.label}`) ||
+                  currentPath.includes(sub.label);
+                return (
+                  <li>
+                    <a
+                      href={sub.href}
+                      class={`nav-item ${isSubActive ? "active" : ""}`}
+                    >
+                      {sub.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        )}
+      </div>
+    )}
+  </div>
+  <div class="nav-brand">{brand}</div>
+</nav>
+
+<style lang="scss">
+  .global-navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: #16161d;
+    color: #e2e2e2;
+    position: relative;
+    font-family: "Cascadia Mono", monospace;
+    font-weight: 400;
+    z-index: 100;
+    box-sizing: border-box;
+    width: 100%;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+  }
+
+  .nav-cluster {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-segment {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-divider {
+    color: rgba(255, 255, 255, 0.25);
+    user-select: none;
+    font-weight: 300;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    text-decoration: none;
+    color: #e2e2e2;
+    font-size: 0.95rem;
+    transition: color 0.15s ease, opacity 0.15s ease;
+
+    &:hover {
+      text-decoration: underline;
+      color: #ffffff;
+    }
+
+    &.active {
+      color: #ffd47d;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+
+    .back-arrow {
+      font-weight: 600;
+      color: #ffd47d;
+      transition: transform 0.15s ease;
+    }
+
+    &:hover .back-arrow {
+      transform: translateX(-3px);
+    }
+  }
+
+  .nav-brand {
+    color: #ffd47d;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+  }
+</style>

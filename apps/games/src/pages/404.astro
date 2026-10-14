@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Redirecting — Games" description="Loading puzzle or redirecting...">
+  <div class="redirect-wrap">
+    <div class="redirect-spinner"></div>
+    <p class="redirect-text">Loading puzzle...</p>
+  </div>
+
+  <script is:inline>
+    // Client-side single page routing helper for static hosting
+    var path = window.location.pathname;
+    var match = path.match(/^\/c\/([a-zA-Z0-9-_]+)/);
+    if (match && match[1]) {
+      window.location.replace('/categories?c=' + encodeURIComponent(match[1]));
+    } else if (path.includes('/create') || path.includes('/new')) {
+      window.location.replace('/categories?view=create');
+    } else {
+      window.location.replace('/');
+    }
+  </script>
+</Layout>
+
+<style lang="scss">
+  .redirect-wrap {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 2rem;
+  }
+
+  .redirect-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 212, 125, 0.2);
+    border-top-color: #ffd47d;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  .redirect-text {
+    font-family: "Cascadia Mono", monospace;
+    font-size: 1rem;
+    color: #9e9ea8;
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

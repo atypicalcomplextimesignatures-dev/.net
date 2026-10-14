@@ -1,0 +1,72 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Projects — atypicalcomplextimesignatures",
+  description = "Software, experimental interactive systems, and game mechanics.",
+} = Astro.props;
+
+import Navbar from "@repo/ui/Navbar.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:wght@400;600;700&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <Navbar currentSection="projects" currentPath={Astro.url.pathname} />
+    <main class="page-container">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global lang="scss">
+  :root {
+    --bg-page: #101015;
+    --bg-card: rgba(20, 20, 28, 0.8);
+    --border-card: rgba(255, 255, 255, 0.08);
+    --text-primary: #ededf5;
+    --text-muted: #9a9ab0;
+    --accent-gold: #ffd47d;
+    --accent-cyan: #4de2f0;
+    --accent-green: #48e58a;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: "Inter", -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  .page-container {
+    flex: 1;
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+</style>
