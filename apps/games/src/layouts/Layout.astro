@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Categories",
+  description = "Custom word puzzle games."
+} = Astro.props;
+
+import "../styles/style.css";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%2245%22 height=%2245%22 fill=%22%23FF5A24%22/><rect x=%2255%22 width=%2245%22 height=%2245%22 fill=%22%2319F30C%22/><rect y=%2255%22 width=%2245%22 height=%2245%22 fill=%22%2326c9ff%22/><rect x=%2255%22 y=%2255%22 width=%2245%22 height=%2245%22 fill=%22%23e60cf3%22/></svg>">
+    <script is:inline src="/qrcode.min.js"></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

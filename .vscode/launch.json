@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "command": "pnpm dev:landing",
+      "name": "Dev: Landing",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "pnpm dev:games",
+      "name": "Dev: Games",
+      "request": "launch",
+      "type": "node-terminal"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "name": "setsutetsui.github.io",
+  "name": "landing",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@repo/ui": "workspace:*",
     "astro": "^5.16.11",
     "vanilla-picker": "^2.12.3"
   },
